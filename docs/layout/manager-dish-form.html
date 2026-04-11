@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Новое блюдо</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FAF7F2; color: #2D2A26;
+    max-width: 430px; margin: 0 auto; min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .header {
+    padding: 20px 16px 12px; background: #FFFFFF;
+    border-bottom: 1px solid #EDE8E0;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .back { font-size: 22px; text-decoration: none; color: #2D2A26; cursor: pointer; background: none; border: none; }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .form { padding: 20px 16px; display: flex; flex-direction: column; gap: 18px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: #666; margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 12px 14px; border: 1px solid #EDE8E0; border-radius: 10px;
+    font-size: 15px; background: #FFFFFF; color: #2D2A26;
+    font-family: inherit;
+  }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: #C2703E;
+  }
+  .inline-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .kbju-fields { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+  .kbju-fields label { font-size: 11px; }
+  .kbju-fields input { padding: 10px 8px; font-size: 14px; }
+  .save-btn {
+    width: 100%; padding: 14px; border: none; border-radius: 12px;
+    background: #C2703E; color: #fff; font-size: 16px; font-weight: 600;
+    cursor: pointer; margin-top: 8px;
+  }
+
+  .tab-bar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px; background: #FFFFFF;
+    border-top: 1px solid #EDE8E0; display: flex;
+    padding: 6px 0 env(safe-area-inset-bottom, 8px);
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; padding: 6px 0; font-size: 10px; color: #999;
+    text-decoration: none; border: none; background: none; cursor: pointer;
+  }
+  .tab.active { color: #C2703E; }
+  .tab .icon { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <button class="back">&#8249;</button>
+  <h1>Новое блюдо</h1>
+</div>
+
+<div class="form">
+  <div class="field">
+    <label>Название</label>
+    <input type="text" placeholder="Борщ с говядиной">
+  </div>
+
+  <div class="field">
+    <label>Категория</label>
+    <select>
+      <option>Горячее</option>
+      <option>Холодные закуски</option>
+      <option>Супы</option>
+      <option>Салаты</option>
+      <option>Десерты</option>
+      <option>Напитки</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Описание</label>
+    <textarea placeholder="Классический борщ на говяжьем бульоне с домашней сметаной"></textarea>
+  </div>
+
+  <div class="inline-fields">
+    <div class="field">
+      <label>Стоимость, &#8381;</label>
+      <input type="number" placeholder="420">
+    </div>
+    <div class="field">
+      <label>Вес, г</label>
+      <input type="number" placeholder="350">
+    </div>
+  </div>
+
+  <div class="field">
+    <label>КБЖУ</label>
+    <div class="kbju-fields">
+      <div class="field"><label>Ккал</label><input type="number" placeholder="245"></div>
+      <div class="field"><label>Белки (г)</label><input type="number" placeholder="12"></div>
+      <div class="field"><label>Жиры (г)</label><input type="number" placeholder="8"></div>
+      <div class="field"><label>Углеводы (г)</label><input type="number" placeholder="28"></div>
+    </div>
+  </div>
+
+  <button class="save-btn">Сохранить</button>
+</div>
+
+<nav class="tab-bar">
+  <button class="tab active"><span class="icon">&#127860;</span>Меню</button>
+  <button class="tab"><span class="icon">&#9881;</span>Столы</button>
+  <button class="tab"><span class="icon">&#128101;</span>Персонал</button>
+  <button class="tab"><span class="icon">&#128200;</span>Статистика</button>
+  <button class="tab"><span class="icon">&#8943;</span>Ещё</button>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Мои столы</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FAF7F2;
+    color: #2D2A26;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 12px;
+    position: sticky;
+    top: 0;
+    background: #FAF7F2;
+    z-index: 10;
+  }
+  .header h1 { font-size: 24px; font-weight: 700; }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #8A857D;
+  }
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #C2703E;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .section-label {
+    padding: 16px 20px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #8A857D;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .cards { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
+  .card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    cursor: pointer;
+  }
+  .card:active { opacity: 0.92; }
+  .card-history {
+    opacity: 0.6;
+  }
+  .table-num {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: #EDE8E0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .card-body { flex: 1; }
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .card-title { font-size: 16px; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge-unpaid { background: #FDF0EC; color: #B84233; }
+  .badge-paid { background: #EBF3EB; color: #5B7C5A; }
+  .badge-free { background: #EDE8E0; color: #8A857D; }
+  .badge-closed { background: #EDE8E0; color: #8A857D; }
+  .card-meta { font-size: 13px; color: #8A857D; }
+  .chevron { color: #C4BFB7; font-size: 20px; flex-shrink: 0; }
+  .new-dot {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 10px; height: 10px;
+    background: #B84233;
+    border-radius: 50%;
+  }
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: #FFFFFF;
+    border-top: 1px solid #EDE8E0;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0 env(safe-area-inset-bottom, 12px);
+    z-index: 20;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+    color: #8A857D;
+    text-decoration: none;
+    padding: 4px 12px;
+  }
+  .tab.active { color: #C2703E; }
+  .tab-icon { font-size: 22px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Мои столы</h1>
+  <div class="header-right">
+    Анна С.
+    <div class="avatar">АС</div>
+  </div>
+</div>
+
+<div class="section-label">Активные</div>
+<div class="cards">
+  <div class="card">
+    <div class="table-num">3</div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-title">Стол 3</span>
+        <span class="badge badge-unpaid">Не оплачен</span>
+      </div>
+      <div class="card-meta">5 позиций · 2 340 ₽</div>
+    </div>
+    <span class="chevron">›</span>
+  </div>
+
+  <div class="card">
+    <div class="new-dot"></div>
+    <div class="table-num">5</div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-title">Стол 5</span>
+        <span class="badge badge-unpaid">Не оплачен</span>
+      </div>
+      <div class="card-meta">4 позиции · 2 060 ₽</div>
+    </div>
+    <span class="chevron">›</span>
+  </div>
+
+  <div class="card">
+    <div class="table-num">8</div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-title">Стол 8</span>
+        <span class="badge badge-paid">Оплачен</span>
+      </div>
+      <div class="card-meta">7 позиций · 4 120 ₽</div>
+    </div>
+    <span class="chevron">›</span>
+  </div>
+
+  <div class="card">
+    <div class="table-num">12</div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-title">Стол 12</span>
+        <span class="badge badge-free">Свободен</span>
+      </div>
+      <div class="card-meta">Нет заказа</div>
+    </div>
+    <span class="chevron">›</span>
+  </div>
+</div>
+
+<div class="section-label">История за сегодня</div>
+<div class="cards">
+  <div class="card card-history">
+    <div class="table-num">2</div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-title">Стол 2</span>
+        <span class="badge badge-closed">Закрыт</span>
+      </div>
+      <div class="card-meta">3 позиции · 1 580 ₽ · 12:05–13:40</div>
+    </div>
+    <span class="chevron">›</span>
+  </div>
+
+  <div class="card card-history">
+    <div class="table-num">5</div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-title">Стол 5</span>
+        <span class="badge badge-closed">Закрыт</span>
+      </div>
+      <div class="card-meta">6 позиций · 3 210 ₽ · 11:20–12:50</div>
+    </div>
+    <span class="chevron">›</span>
+  </div>
+</div>
+
+<nav class="tab-bar">
+  <a class="tab active" href="#">
+    <span class="tab-icon">☰</span>
+    Столы
+  </a>
+  <a class="tab" href="waiter-requests.html">
+    <span class="tab-icon">🔔</span>
+    Заявки
+  </a>
+  <a class="tab" href="profile.html">
+    <span class="tab-icon">👤</span>
+    Профиль
+  </a>
+</nav>
+</body>
+</html>

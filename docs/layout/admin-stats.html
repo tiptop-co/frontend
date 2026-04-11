@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Статистика</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    max-width: 430px; margin: 0 auto; min-height: 100vh;
+    background: #FAF7F2; color: #2D2A26;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding-bottom: 72px;
+  }
+  .header {
+    background: #fff; padding: 16px 20px; border-bottom: 1px solid #EDE8E0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { font-size: 20px; font-weight: 700; color: #C2703E; }
+  .logo span { color: #2D2A26; }
+  .header-right { text-align: right; }
+  .header-title { font-size: 15px; font-weight: 600; }
+  .header-date { font-size: 13px; color: #999; margin-top: 2px; }
+  .content { padding: 16px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .stat-card {
+    background: #fff; border-radius: 12px; padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .stat-label { font-size: 13px; color: #999; margin-bottom: 4px; }
+  .stat-value { font-size: 22px; font-weight: 700; }
+  .stat-value.accent { color: #C2703E; }
+  .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .venue-card {
+    background: #fff; border-radius: 12px; padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 12px;
+  }
+  .venue-name { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .metrics { display: flex; gap: 8px; }
+  .metric { flex: 1; background: #FAF7F2; border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .metric-label { font-size: 11px; color: #999; margin-bottom: 2px; }
+  .metric-value { font-size: 14px; font-weight: 700; }
+  .tab-bar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px; background: #fff;
+    border-top: 1px solid #EDE8E0; display: flex; padding: 8px 0 env(safe-area-inset-bottom, 8px);
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; font-size: 11px; color: #999; text-decoration: none; padding: 4px 0;
+  }
+  .tab.active { color: #C2703E; }
+  .tab-icon { font-size: 22px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Tip<span>Top</span></div>
+  <div class="header-right">
+    <div class="header-title">Статистика по заведениям</div>
+    <div class="header-date">Апрель 2026</div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="grid">
+    <div class="stat-card">
+      <div class="stat-label">Заведений</div>
+      <div class="stat-value">4</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Общая выручка</div>
+      <div class="stat-value accent">1 247 500 &#8381;</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Всего заказов</div>
+      <div class="stat-value">1 843</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Средний чек</div>
+      <div class="stat-value">677 &#8381;</div>
+    </div>
+  </div>
+
+  <div class="section-title">По заведениям</div>
+
+  <div class="venue-card">
+    <div class="venue-name">Гастроном</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Выручка</div><div class="metric-value">427 500 &#8381;</div></div>
+      <div class="metric"><div class="metric-label">Заказов</div><div class="metric-value">512</div></div>
+      <div class="metric"><div class="metric-label">Ср. чек</div><div class="metric-value">835 &#8381;</div></div>
+    </div>
+  </div>
+
+  <div class="venue-card">
+    <div class="venue-name">Кофейня на Арбате</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Выручка</div><div class="metric-value">312 000 &#8381;</div></div>
+      <div class="metric"><div class="metric-label">Заказов</div><div class="metric-value">487</div></div>
+      <div class="metric"><div class="metric-label">Ср. чек</div><div class="metric-value">641 &#8381;</div></div>
+    </div>
+  </div>
+
+  <div class="venue-card">
+    <div class="venue-name">Пиццерия Маргарита</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Выручка</div><div class="metric-value">298 000 &#8381;</div></div>
+      <div class="metric"><div class="metric-label">Заказов</div><div class="metric-value">423</div></div>
+      <div class="metric"><div class="metric-label">Ср. чек</div><div class="metric-value">705 &#8381;</div></div>
+    </div>
+  </div>
+
+  <div class="venue-card">
+    <div class="venue-name">Суши-бар Токио</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Выручка</div><div class="metric-value">210 000 &#8381;</div></div>
+      <div class="metric"><div class="metric-label">Заказов</div><div class="metric-value">421</div></div>
+      <div class="metric"><div class="metric-label">Ср. чек</div><div class="metric-value">499 &#8381;</div></div>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-bar">
+  <a class="tab" href="admin-managers.html">
+    <span class="tab-icon">&#128101;</span>Менеджеры
+  </a>
+  <a class="tab active" href="admin-stats.html">
+    <span class="tab-icon">&#128202;</span>Статистика
+  </a>
+  <a class="tab" href="#">
+    <span class="tab-icon">&#9881;</span>Профиль
+  </a>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Стол 5</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FAF7F2;
+    color: #2D2A26;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px 12px;
+    position: sticky;
+    top: 0;
+    background: #FAF7F2;
+    z-index: 10;
+  }
+  .back { font-size: 24px; text-decoration: none; color: #2D2A26; cursor: pointer; }
+  .header h1 { font-size: 22px; font-weight: 700; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+  .badge-open { background: #C2703E; color: #fff; }
+  .section { padding: 0 20px; margin-bottom: 24px; }
+  .section-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+  .card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    margin-bottom: 12px;
+  }
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .order-title { font-size: 15px; font-weight: 600; }
+  .order-badge {
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #C2703E;
+    color: #fff;
+  }
+  .order-time { font-size: 13px; color: #8A857D; margin-left: 8px; }
+  .order-items { border-top: 1px solid #EDE8E0; padding-top: 10px; }
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    padding: 6px 0;
+    border-radius: 6px;
+  }
+  .order-item-name { color: #2D2A26; }
+  .order-item-price { color: #8A857D; white-space: nowrap; }
+  .order-item.unpaid {
+    background: #FDF0EC;
+    margin: 2px -8px;
+    padding: 6px 8px;
+  }
+  .order-item.unpaid .order-item-name { color: #B84233; }
+  .order-item.unpaid .order-item-price { color: #B84233; }
+  .order-item.paid .order-item-name { color: #5B7C5A; }
+  .order-item.paid .order-item-price { color: #5B7C5A; }
+  .paid-icon { font-size: 12px; margin-right: 4px; }
+  .order-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 700;
+    border-top: 1px solid #EDE8E0;
+    padding-top: 10px;
+    margin-top: 8px;
+  }
+  .payment-summary {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #8A857D;
+    margin-top: 6px;
+  }
+  .all-paid-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #EBF3EB;
+    border: 1px solid #5B7C5A;
+    color: #5B7C5A;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 20px 20px;
+  }
+  .all-paid-banner.hidden {
+    display: none;
+  }
+  .unpaid-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #FDF0EC;
+    border: 1px solid #E8A089;
+    color: #B84233;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 20px 20px;
+  }
+  .request-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .request-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #D4A017;
+    flex-shrink: 0;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .request-body { flex: 1; }
+  .request-title { font-size: 15px; font-weight: 600; }
+  .request-meta { font-size: 13px; color: #8A857D; }
+  .close-table-section { padding: 0 20px; margin-bottom: 24px; }
+  .btn-close-table {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #B84233;
+    border-radius: 12px;
+    background: transparent;
+    color: #B84233;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-close-table:active { background: #B84233; color: #fff; }
+  .btn-close-table[disabled] {
+    border-color: #D5D0C8;
+    color: #D5D0C8;
+    cursor: not-allowed;
+  }
+  .close-hint { font-size: 12px; color: #8A857D; text-align: center; margin-top: 8px; }
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: #FFFFFF;
+    border-top: 1px solid #EDE8E0;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0 env(safe-area-inset-bottom, 12px);
+    z-index: 20;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+    color: #8A857D;
+    text-decoration: none;
+    padding: 4px 12px;
+  }
+  .tab.active { color: #C2703E; }
+  .tab-icon { font-size: 22px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back" href="waiter-tables.html">←</a>
+  <h1>Стол 5</h1>
+  <span class="badge badge-open">Открыт</span>
+</div>
+
+<div class="section">
+  <div class="section-title">Заказ</div>
+  <div class="card">
+    <div class="order-header">
+      <div>
+        <span class="order-title">Заказ</span>
+        <span class="order-time">открыт в 14:23</span>
+      </div>
+      <span class="order-badge">В процессе</span>
+    </div>
+    <div class="order-items">
+      <div class="order-item paid">
+        <span class="order-item-name"><span class="paid-icon">✓</span> Том Ям × 1</span>
+        <span class="order-item-price">590 ₽</span>
+      </div>
+      <div class="order-item unpaid">
+        <span class="order-item-name">Борщ с говядиной × 1</span>
+        <span class="order-item-price">490 ₽</span>
+      </div>
+      <div class="order-item unpaid">
+        <span class="order-item-name">Цезарь с курицей × 1</span>
+        <span class="order-item-price">520 ₽</span>
+      </div>
+      <div class="order-item unpaid">
+        <span class="order-item-name">Морс клюквенный × 2</span>
+        <span class="order-item-price">460 ₽</span>
+      </div>
+    </div>
+    <div class="order-total">
+      <span>Итого</span>
+      <span>2 060 ₽</span>
+    </div>
+    <div class="payment-summary">
+      <span>Оплачено: 590 ₽</span>
+      <span>Не оплачено: 1 470 ₽</span>
+    </div>
+  </div>
+</div>
+
+<div class="unpaid-banner">
+  ⚠ Есть неоплаченные позиции — 1 470 ₽
+</div>
+
+<!-- Вариант когда всё оплачено (раскомментировать):
+<div class="all-paid-banner">
+  ✓ Все позиции оплачены
+</div>
+-->
+
+<div class="section">
+  <div class="section-title">Заявки</div>
+  <div class="card">
+    <div class="request-card">
+      <div class="request-dot"></div>
+      <div class="request-body">
+        <div class="request-title">Вызов официанта</div>
+        <div class="request-meta">14:35 · Ожидание</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="close-table-section">
+  <button class="btn-close-table" disabled>Закрыть стол</button>
+  <div class="close-hint">Стол можно закрыть, когда все позиции оплачены</div>
+</div>
+
+<nav class="tab-bar">
+  <a class="tab active" href="waiter-tables.html">
+    <span class="tab-icon">☰</span>
+    Столы
+  </a>
+  <a class="tab" href="waiter-requests.html">
+    <span class="tab-icon">🔔</span>
+    Заявки
+  </a>
+  <a class="tab" href="profile.html">
+    <span class="tab-icon">👤</span>
+    Профиль
+  </a>
+</nav>
+</body>
+</html>

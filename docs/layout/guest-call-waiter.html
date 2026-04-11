@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Вызов официанта</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    max-width: 430px; margin: 0 auto; min-height: 100vh;
+    background: #FAF7F2; color: #2D2A26;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding-bottom: 72px;
+  }
+  .header {
+    position: sticky; top: 0; z-index: 10;
+    background: #FAF7F2; padding: 16px 20px;
+    border-bottom: 1px solid #EDE8E0;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .call-section {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 48px 24px 32px; text-align: center;
+  }
+  .call-icon { font-size: 64px; margin-bottom: 20px; }
+  .call-text { font-size: 15px; color: #666; line-height: 1.5; margin-bottom: 28px; max-width: 280px; }
+  .btn-call {
+    width: 180px; height: 180px; border-radius: 50%;
+    background: #C2703E; color: #fff; border: none;
+    font-size: 17px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; line-height: 1.3;
+    box-shadow: 0 4px 16px rgba(194,112,62,.35);
+  }
+  .status-section { padding: 0 16px; margin-top: 8px; }
+  .status-title { font-size: 14px; color: #888; margin-bottom: 8px; }
+  .card {
+    background: #fff; border-radius: 14px; padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .status-row { display: flex; justify-content: space-between; align-items: center; }
+  .status-label { font-size: 15px; font-weight: 600; }
+  .status-time { font-size: 13px; color: #888; margin-top: 4px; }
+  .status-badge {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: #C2703E;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #C2703E;
+    animation: pulse 1.4s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(.75); }
+  }
+  /* Tab bar */
+  .tab-bar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px; background: #fff;
+    border-top: 1px solid #EDE8E0; display: flex;
+    padding: 6px 0 env(safe-area-inset-bottom, 8px); z-index: 20;
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    text-decoration: none; color: #999; font-size: 11px; padding: 4px 0;
+  }
+  .tab.active { color: #C2703E; }
+  .tab-icon { font-size: 22px; line-height: 1; }
+</style>
+</head>
+<body>
+  <div class="header"><h1>Вызов официанта</h1></div>
+
+  <div class="call-section">
+    <div class="call-icon">🔔</div>
+    <div class="call-text">Нажмите кнопку, чтобы вызвать официанта к&nbsp;столу&nbsp;5</div>
+    <button class="btn-call">Вызвать<br>официанта</button>
+  </div>
+
+  <div class="status-section">
+    <div class="status-title">Активные заявки</div>
+    <div class="card">
+      <div class="status-row">
+        <div>
+          <div class="status-label">Заявка отправлена</div>
+          <div class="status-time">14:35</div>
+        </div>
+        <div class="status-badge">
+          <span class="pulse-dot"></span>
+          Ожидание
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tab-bar">
+    <a class="tab" href="#"><span class="tab-icon">☰</span>Меню</a>
+    <a class="tab" href="#"><span class="tab-icon">🛒</span>Корзина</a>
+    <a class="tab" href="guest-orders.html"><span class="tab-icon">📋</span>Заказы</a>
+    <a class="tab active" href="#"><span class="tab-icon">🔔</span>Вызов</a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Заявки</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FAF7F2;
+    color: #2D2A26;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .header {
+    padding: 16px 20px 12px;
+    position: sticky;
+    top: 0;
+    background: #FAF7F2;
+    z-index: 10;
+  }
+  .header h1 { font-size: 24px; font-weight: 700; }
+  .chips {
+    display: flex;
+    gap: 8px;
+    padding: 8px 20px 16px;
+    overflow-x: auto;
+  }
+  .chip {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1.5px solid #EDE8E0;
+    background: #FFFFFF;
+    color: #8A857D;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chip.active {
+    background: #C2703E;
+    color: #fff;
+    border-color: #C2703E;
+  }
+  .cards { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
+  .card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .status-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-amber {
+    background: #D4A017;
+    animation: pulse 1.5s infinite;
+  }
+  .dot-green { background: #5B7C5A; }
+  .dot-gray { background: #C4BFB7; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .card-title { font-size: 15px; font-weight: 600; flex: 1; }
+  .card-time { font-size: 13px; color: #8A857D; }
+  .card-table { font-size: 13px; color: #8A857D; margin-bottom: 4px; }
+  .card-status { font-size: 13px; font-weight: 500; }
+  .status-waiting { color: #D4A017; }
+  .status-accepted { color: #5B7C5A; }
+  .status-done { color: #8A857D; }
+  .card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .btn-accept {
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: #C2703E;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn-accept:active { opacity: 0.85; }
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: #FFFFFF;
+    border-top: 1px solid #EDE8E0;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0 env(safe-area-inset-bottom, 12px);
+    z-index: 20;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+    color: #8A857D;
+    text-decoration: none;
+    padding: 4px 12px;
+  }
+  .tab.active { color: #C2703E; }
+  .tab-icon { font-size: 22px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Заявки</h1>
+</div>
+
+<div class="chips">
+  <span class="chip active">Все</span>
+  <span class="chip">Ожидание</span>
+  <span class="chip">Обработано</span>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <div class="card-table">Стол 5</div>
+    <div class="card-top">
+      <span class="status-dot dot-amber"></span>
+      <span class="card-title">Вызов официанта</span>
+      <span class="card-time">14:35</span>
+    </div>
+    <div class="card-bottom">
+      <span class="card-status status-waiting">Ожидание</span>
+      <button class="btn-accept">Принять</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-table">Стол 3</div>
+    <div class="card-top">
+      <span class="status-dot dot-green"></span>
+      <span class="card-title">Вызов официанта</span>
+      <span class="card-time">14:12</span>
+    </div>
+    <div class="card-bottom">
+      <span class="card-status status-accepted">Принята</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-table">Стол 8</div>
+    <div class="card-top">
+      <span class="status-dot dot-gray"></span>
+      <span class="card-title">Вызов официанта</span>
+      <span class="card-time">13:45</span>
+    </div>
+    <div class="card-bottom">
+      <span class="card-status status-done">Обработана</span>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-bar">
+  <a class="tab" href="waiter-tables.html">
+    <span class="tab-icon">☰</span>
+    Столы
+  </a>
+  <a class="tab active" href="#">
+    <span class="tab-icon">🔔</span>
+    Заявки
+  </a>
+  <a class="tab" href="profile.html">
+    <span class="tab-icon">👤</span>
+    Профиль
+  </a>
+</nav>
+</body>
+</html>

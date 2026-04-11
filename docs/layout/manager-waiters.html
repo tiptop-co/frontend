@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Официанты</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FAF7F2; color: #2D2A26;
+    max-width: 430px; margin: 0 auto; min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .header {
+    padding: 20px 16px 12px; background: #FFFFFF;
+    border-bottom: 1px solid #EDE8E0;
+  }
+  .header h1 { font-size: 22px; font-weight: 700; }
+  .add-btn {
+    display: flex; align-items: center; gap: 6px;
+    margin: 16px 16px 0; padding: 10px 16px;
+    border: 1.5px solid #C2703E; border-radius: 10px;
+    background: transparent; color: #C2703E;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    width: calc(100% - 32px); justify-content: center;
+  }
+  .list { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .card {
+    background: #FFFFFF; border-radius: 12px; padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .info { flex: 1; }
+  .name { font-size: 15px; font-weight: 600; }
+  .email { font-size: 13px; color: #888; margin-top: 2px; }
+  .badge {
+    display: inline-block; font-size: 11px; padding: 2px 10px;
+    border-radius: 10px; background: rgba(91,124,90,0.12); color: #5B7C5A;
+    margin-top: 4px; font-weight: 600;
+  }
+  .del-btn {
+    background: none; border: none; cursor: pointer;
+    color: #B84233; font-size: 18px; margin-left: 12px;
+  }
+  .tab-bar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px; background: #FFFFFF;
+    border-top: 1px solid #EDE8E0; display: flex;
+    padding: 6px 0 env(safe-area-inset-bottom, 8px);
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; padding: 6px 0; font-size: 10px; color: #999;
+    border: none; background: none; cursor: pointer;
+  }
+  .tab.active { color: #C2703E; }
+  .tab .icon { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Официанты</h1>
+</div>
+
+<button class="add-btn">+ Добавить официанта</button>
+
+<div class="list">
+  <div class="card">
+    <div class="info">
+      <div class="name">Анна Смирнова</div>
+      <div class="email">anna@example.com</div>
+      <span class="badge">Активен</span>
+    </div>
+    <button class="del-btn">&#128465;</button>
+  </div>
+  <div class="card">
+    <div class="info">
+      <div class="name">Пётр Иванов</div>
+      <div class="email">petr@example.com</div>
+      <span class="badge">Активен</span>
+    </div>
+    <button class="del-btn">&#128465;</button>
+  </div>
+  <div class="card">
+    <div class="info">
+      <div class="name">Мария Козлова</div>
+      <div class="email">maria@example.com</div>
+      <span class="badge">Активен</span>
+    </div>
+    <button class="del-btn">&#128465;</button>
+  </div>
+</div>
+
+<nav class="tab-bar">
+  <button class="tab"><span class="icon">&#127860;</span>Меню</button>
+  <button class="tab"><span class="icon">&#9881;</span>Столы</button>
+  <button class="tab active"><span class="icon">&#128101;</span>Персонал</button>
+  <button class="tab"><span class="icon">&#128200;</span>Статистика</button>
+  <button class="tab"><span class="icon">&#8943;</span>Ещё</button>
+</nav>
+
+</body>
+</html>

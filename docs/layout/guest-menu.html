@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Меню</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  max-width: 430px; margin: 0 auto; min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #FAF7F2; color: #2D2A26;
+  padding-bottom: 140px;
+}
+.header {
+  position: sticky; top: 0; z-index: 10;
+  background: #FAF7F2; padding: 16px 16px 0;
+}
+.header-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.header-top h1 { font-size: 22px; font-weight: 700; }
+.table-badge {
+  background: #EDE8E0; padding: 4px 12px; border-radius: 12px;
+  font-size: 13px; font-weight: 600; color: #5B7C5A;
+}
+.categories {
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.categories::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0; padding: 7px 16px; border-radius: 20px;
+  font-size: 14px; font-weight: 500; border: 1px solid #EDE8E0;
+  background: #fff; color: #2D2A26; cursor: pointer;
+  white-space: nowrap;
+}
+.chip.active { background: #C2703E; color: #fff; border-color: #C2703E; }
+
+.menu-list { padding: 0 16px; display: flex; flex-direction: column; gap: 12px; }
+.card {
+  background: #fff; border-radius: 14px; padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+}
+.card-info { flex: 1; min-width: 0; }
+.card-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.card-desc {
+  font-size: 13px; color: #888; line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; margin-bottom: 6px;
+}
+.card-meta { display: flex; align-items: center; gap: 10px; }
+.card-weight { font-size: 12px; color: #aaa; }
+.card-price { font-size: 16px; font-weight: 700; color: #C2703E; }
+.card-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; align-self: stretch; }
+.add-btn {
+  width: 36px; height: 36px; border-radius: 50%; border: none;
+  background: #C2703E; color: #fff; font-size: 22px; font-weight: 400;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+
+.floating-cart {
+  position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%);
+  max-width: 398px; width: calc(100% - 32px);
+  background: #C2703E; color: #fff; border-radius: 14px;
+  padding: 14px 20px; font-size: 15px; font-weight: 600;
+  display: flex; justify-content: center; align-items: center; gap: 6px;
+  box-shadow: 0 4px 16px rgba(194,112,62,.35); cursor: pointer; z-index: 20;
+}
+
+.tab-bar {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  max-width: 430px; width: 100%; background: #fff;
+  border-top: 1px solid #EDE8E0; display: flex;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px); z-index: 30;
+}
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 2px; font-size: 10px; color: #aaa; text-decoration: none; cursor: pointer;
+}
+.tab.active { color: #C2703E; }
+.tab-icon { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <h1>Гастроном</h1>
+    <span class="table-badge">Стол 5</span>
+  </div>
+  <div class="categories">
+    <span class="chip active">Все</span>
+    <span class="chip">Горячее</span>
+    <span class="chip">Холодные закуски</span>
+    <span class="chip">Супы</span>
+    <span class="chip">Салаты</span>
+    <span class="chip">Десерты</span>
+    <span class="chip">Напитки</span>
+  </div>
+</div>
+
+<div class="menu-list">
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Борщ с говядиной</div>
+      <div class="card-desc">Наваристый борщ на говяжьем бульоне со сметаной и чесночными пампушками</div>
+      <div class="card-meta">
+        <span class="card-weight">350 г</span>
+        <span class="card-price">490 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Цезарь с курицей</div>
+      <div class="card-desc">Хрустящий романо, куриное филе на гриле, пармезан, соус цезарь и сухарики</div>
+      <div class="card-meta">
+        <span class="card-weight">280 г</span>
+        <span class="card-price">520 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Пельмени домашние</div>
+      <div class="card-desc">Пельмени ручной лепки с начинкой из свинины и говядины, подаются со сметаной</div>
+      <div class="card-meta">
+        <span class="card-weight">300 г</span>
+        <span class="card-price">460 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Сельдь под шубой</div>
+      <div class="card-desc">Классическая слоёная закуска с сельдью, свёклой, картофелем и морковью</div>
+      <div class="card-meta">
+        <span class="card-weight">220 г</span>
+        <span class="card-price">380 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Тирамису</div>
+      <div class="card-desc">Итальянский десерт с маскарпоне, печеньем савоярди и кофейной пропиткой</div>
+      <div class="card-meta">
+        <span class="card-weight">180 г</span>
+        <span class="card-price">420 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Уха по-царски</div>
+      <div class="card-desc">Уха из сёмги и судака с овощами, подаётся с расстегаем</div>
+      <div class="card-meta">
+        <span class="card-weight">400 г</span>
+        <span class="card-price">580 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Оливье</div>
+      <div class="card-desc">Классический салат с отварной говядиной, картофелем, яйцом и домашним майонезом</div>
+      <div class="card-meta">
+        <span class="card-weight">250 г</span>
+        <span class="card-price">360 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-info">
+      <div class="card-name">Морс клюквенный</div>
+      <div class="card-desc">Домашний морс из свежей клюквы с лёгкой кислинкой</div>
+      <div class="card-meta">
+        <span class="card-weight">300 мл</span>
+        <span class="card-price">180 ₽</span>
+      </div>
+    </div>
+    <div class="card-right"><button class="add-btn">+</button></div>
+  </div>
+</div>
+
+<div class="floating-cart">Корзина · 3 · 1 470 ₽</div>
+
+<nav class="tab-bar">
+  <a class="tab active"><span class="tab-icon">☰</span>Меню</a>
+  <a class="tab"><span class="tab-icon">🛒</span>Корзина</a>
+  <a class="tab"><span class="tab-icon">📋</span>Заказы</a>
+  <a class="tab"><span class="tab-icon">🔔</span>Вызов</a>
+</nav>
+
+</body>
+</html>

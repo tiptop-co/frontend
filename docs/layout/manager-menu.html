@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Меню</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #FAF7F2;
+    color: #2D2A26;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .header {
+    padding: 20px 16px 12px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #EDE8E0;
+  }
+  .header h1 { font-size: 22px; font-weight: 700; }
+  .header .subtitle { font-size: 13px; color: #888; margin-top: 2px; }
+  .add-btn {
+    display: flex; align-items: center; gap: 6px;
+    margin: 16px 16px 0;
+    padding: 10px 16px;
+    border: 1.5px solid #C2703E;
+    border-radius: 10px;
+    background: transparent;
+    color: #C2703E;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+  }
+  .chips {
+    display: flex; gap: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    background: #EDE8E0;
+    color: #2D2A26;
+    border: none; cursor: pointer;
+  }
+  .chip.active { background: #C2703E; color: #fff; }
+  .dish-list { padding: 0 16px; display: flex; flex-direction: column; gap: 10px; }
+  .dish-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dish-info { flex: 1; min-width: 0; }
+  .dish-name { font-size: 15px; font-weight: 600; }
+  .dish-meta { font-size: 13px; color: #888; margin-top: 4px; display: flex; gap: 10px; align-items: center; }
+  .cat-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #EDE8E0;
+    color: #666;
+  }
+  .dish-actions { display: flex; align-items: center; gap: 12px; margin-left: 12px; }
+  .del-btn {
+    background: none; border: none; cursor: pointer;
+    color: #B84233; font-size: 18px;
+  }
+  .chevron { color: #ccc; font-size: 18px; }
+
+  /* Bottom Tab Bar */
+  .tab-bar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    background: #FFFFFF;
+    border-top: 1px solid #EDE8E0;
+    display: flex;
+    padding: 6px 0 env(safe-area-inset-bottom, 8px);
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; padding: 6px 0;
+    font-size: 10px; color: #999;
+    text-decoration: none;
+    border: none; background: none; cursor: pointer;
+  }
+  .tab.active { color: #C2703E; }
+  .tab .icon { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Меню</h1>
+  <div class="subtitle">Гастроном</div>
+</div>
+
+<button class="add-btn">+ Добавить блюдо</button>
+
+<div class="chips">
+  <button class="chip active">Все</button>
+  <button class="chip">Горячее</button>
+  <button class="chip">Салаты</button>
+  <button class="chip">Супы</button>
+  <button class="chip">Десерты</button>
+  <button class="chip">Напитки</button>
+</div>
+
+<div class="dish-list">
+  <div class="dish-card">
+    <div class="dish-info">
+      <div class="dish-name">Борщ с говядиной</div>
+      <div class="dish-meta"><span class="cat-tag">Супы</span> 420 ₽ · 350 г</div>
+    </div>
+    <div class="dish-actions">
+      <button class="del-btn">&#128465;</button>
+      <span class="chevron">&#8250;</span>
+    </div>
+  </div>
+
+  <div class="dish-card">
+    <div class="dish-info">
+      <div class="dish-name">Цезарь с курицей</div>
+      <div class="dish-meta"><span class="cat-tag">Салаты</span> 520 ₽ · 280 г</div>
+    </div>
+    <div class="dish-actions">
+      <button class="del-btn">&#128465;</button>
+      <span class="chevron">&#8250;</span>
+    </div>
+  </div>
+
+  <div class="dish-card">
+    <div class="dish-info">
+      <div class="dish-name">Том Ям</div>
+      <div class="dish-meta"><span class="cat-tag">Супы</span> 580 ₽ · 400 г</div>
+    </div>
+    <div class="dish-actions">
+      <button class="del-btn">&#128465;</button>
+      <span class="chevron">&#8250;</span>
+    </div>
+  </div>
+
+  <div class="dish-card">
+    <div class="dish-info">
+      <div class="dish-name">Стейк Рибай</div>
+      <div class="dish-meta"><span class="cat-tag">Горячее</span> 1 890 ₽ · 300 г</div>
+    </div>
+    <div class="dish-actions">
+      <button class="del-btn">&#128465;</button>
+      <span class="chevron">&#8250;</span>
+    </div>
+  </div>
+
+  <div class="dish-card">
+    <div class="dish-info">
+      <div class="dish-name">Тирамису</div>
+      <div class="dish-meta"><span class="cat-tag">Десерты</span> 380 ₽ · 180 г</div>
+    </div>
+    <div class="dish-actions">
+      <button class="del-btn">&#128465;</button>
+      <span class="chevron">&#8250;</span>
+    </div>
+  </div>
+
+  <div class="dish-card">
+    <div class="dish-info">
+      <div class="dish-name">Морс клюквенный</div>
+      <div class="dish-meta"><span class="cat-tag">Напитки</span> 220 ₽ · 300 мл</div>
+    </div>
+    <div class="dish-actions">
+      <button class="del-btn">&#128465;</button>
+      <span class="chevron">&#8250;</span>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-bar">
+  <button class="tab active"><span class="icon">&#127860;</span>Меню</button>
+  <button class="tab"><span class="icon">&#9881;</span>Столы</button>
+  <button class="tab"><span class="icon">&#128101;</span>Персонал</button>
+  <button class="tab"><span class="icon">&#128200;</span>Статистика</button>
+  <button class="tab"><span class="icon">&#8943;</span>Ещё</button>
+</nav>
+
+</body>
+</html>

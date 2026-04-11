@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Оплата</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    max-width: 430px; margin: 0 auto; min-height: 100vh;
+    background: #FAF7F2; color: #2D2A26;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding-bottom: 72px;
+  }
+  .header {
+    position: sticky; top: 0; z-index: 10;
+    background: #FAF7F2; padding: 16px 20px;
+    border-bottom: 1px solid #EDE8E0;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .back { font-size: 22px; text-decoration: none; color: #2D2A26; cursor: pointer; }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .section { padding: 16px 16px 0; }
+  .section-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .card {
+    background: #fff; border-radius: 14px; padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .check-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid #EDE8E0;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item input[type=checkbox] {
+    width: 22px; height: 22px; accent-color: #C2703E; flex-shrink: 0;
+  }
+  .check-item-text { flex: 1; font-size: 14px; }
+  .check-item-price { font-size: 14px; font-weight: 600; white-space: nowrap; }
+  /* Tips */
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .chip {
+    padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 500;
+    border: 1.5px solid #EDE8E0; background: #fff; color: #2D2A26; cursor: pointer;
+  }
+  .chip.active { background: #C2703E; color: #fff; border-color: #C2703E; }
+  .tip-calc { font-size: 14px; color: #2D2A26; margin-bottom: 4px; }
+  .tip-note { font-size: 12px; color: #999; }
+  /* Summary */
+  .summary {
+    background: #fff; border-radius: 14px; padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06); margin-top: 14px;
+  }
+  .summary-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #666; }
+  .summary-row.total { font-size: 18px; font-weight: 700; color: #2D2A26; margin-bottom: 0; margin-top: 4px; border-top: 1px solid #EDE8E0; padding-top: 10px; }
+  .btn-pay {
+    display: block; width: 100%; margin-top: 16px; padding: 16px;
+    background: #C2703E; color: #fff; border: none; border-radius: 14px;
+    font-size: 17px; font-weight: 700; cursor: pointer; text-align: center;
+  }
+  /* Tab bar */
+  .tab-bar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px; background: #fff;
+    border-top: 1px solid #EDE8E0; display: flex;
+    padding: 6px 0 env(safe-area-inset-bottom, 8px); z-index: 20;
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    text-decoration: none; color: #999; font-size: 11px; padding: 4px 0;
+  }
+  .tab.active { color: #C2703E; }
+  .tab-icon { font-size: 22px; line-height: 1; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <a class="back" href="guest-orders.html">←</a>
+    <h1>Оплата</h1>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Выберите позиции к оплате</div>
+    <div class="card">
+      <label class="check-item">
+        <input type="checkbox" checked>
+        <span class="check-item-text">Борщ с говядиной</span>
+        <span class="check-item-price">490&nbsp;₽</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" checked>
+        <span class="check-item-text">Цезарь с курицей</span>
+        <span class="check-item-price">520&nbsp;₽</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox">
+        <span class="check-item-text">Морс клюквенный × 2</span>
+        <span class="check-item-price">460&nbsp;₽</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Чаевые</div>
+    <div class="card">
+      <div class="chips">
+        <span class="chip">Без</span>
+        <span class="chip">5%</span>
+        <span class="chip active">10%</span>
+        <span class="chip">15%</span>
+        <span class="chip">Другая сумма</span>
+      </div>
+      <div class="tip-calc">Чаевые: 101&nbsp;₽</div>
+      <div class="tip-note">Чаевые адресуются вашему официанту</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="summary">
+      <div class="summary-row"><span>Позиции</span><span>1 010&nbsp;₽</span></div>
+      <div class="summary-row"><span>Чаевые</span><span>101&nbsp;₽</span></div>
+      <div class="summary-row total"><span>Итого</span><span>1 111&nbsp;₽</span></div>
+    </div>
+    <button class="btn-pay">Оплатить 1 111&nbsp;₽</button>
+  </div>
+
+  <nav class="tab-bar">
+    <a class="tab" href="#"><span class="tab-icon">☰</span>Меню</a>
+    <a class="tab" href="#"><span class="tab-icon">🛒</span>Корзина</a>
+    <a class="tab active" href="guest-orders.html"><span class="tab-icon">📋</span>Заказы</a>
+    <a class="tab" href="guest-call-waiter.html"><span class="tab-icon">🔔</span>Вызов</a>
+  </nav>
+</body>
+</html>

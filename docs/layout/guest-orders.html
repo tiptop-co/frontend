@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TipTop — Мой заказ</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    max-width: 430px; margin: 0 auto; min-height: 100vh;
+    background: #FAF7F2; color: #2D2A26;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding-bottom: 72px;
+  }
+  .header {
+    position: sticky; top: 0; z-index: 10;
+    background: #FAF7F2; padding: 16px 20px;
+    border-bottom: 1px solid #EDE8E0;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .content { padding: 16px 16px 0; }
+  .card {
+    background: #fff; border-radius: 14px; padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .badge {
+    display: inline-block; padding: 4px 10px; border-radius: 20px;
+    font-size: 13px; font-weight: 600; color: #fff;
+  }
+  .badge--active { background: #C2703E; }
+  .time { font-size: 13px; color: #888; }
+  .items { display: flex; flex-direction: column; gap: 0; }
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 8px 0;
+    border-bottom: 1px solid #F5F2ED;
+  }
+  .item:last-child { border-bottom: none; }
+  .item-name { flex: 1; }
+  .item-price { white-space: nowrap; margin-left: 12px; }
+  .item.paid { color: #5B7C5A; }
+  .item.paid .item-name::before { content: "✓ "; font-size: 12px; }
+  .item.unpaid { color: #B84233; background: #FDF0EC; margin: 0 -8px; padding: 8px 8px; border-radius: 6px; border-bottom: none; margin-bottom: 2px; }
+  .added-label {
+    font-size: 11px;
+    color: #8A857D;
+    padding: 10px 0 4px;
+    border-bottom: 1px solid #F5F2ED;
+  }
+  .divider { border: none; border-top: 1px solid #EDE8E0; margin: 12px 0; }
+  .total-row { display: flex; justify-content: space-between; align-items: center; }
+  .total-label { font-size: 14px; color: #888; }
+  .total-value { font-size: 16px; font-weight: 700; }
+  .payment-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #8A857D;
+    margin-top: 6px;
+  }
+  .btn-primary {
+    display: block; margin-top: 14px; padding: 14px;
+    border: none; border-radius: 12px; background: #C2703E; color: #fff;
+    font-size: 16px; font-weight: 600; cursor: pointer; width: 100%;
+    text-align: center; font-family: inherit;
+  }
+  .btn-primary:active { opacity: 0.9; }
+  /* Tab bar */
+  .tab-bar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px; background: #fff;
+    border-top: 1px solid #EDE8E0; display: flex;
+    padding: 6px 0 env(safe-area-inset-bottom, 8px); z-index: 20;
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    text-decoration: none; color: #999; font-size: 11px; padding: 4px 0;
+  }
+  .tab.active { color: #C2703E; }
+  .tab-icon { font-size: 22px; line-height: 1; }
+</style>
+</head>
+<body>
+  <div class="header"><h1>Мой заказ</h1></div>
+
+  <div class="content">
+    <div class="card">
+      <div class="card-top">
+        <span class="badge badge--active">В процессе</span>
+        <span class="time">Стол 5 · с 14:23</span>
+      </div>
+
+      <div class="items">
+        <div class="item paid">
+          <span class="item-name">Том Ям × 1</span>
+          <span class="item-price">590 ₽</span>
+        </div>
+        <div class="item unpaid">
+          <span class="item-name">Борщ с говядиной × 1</span>
+          <span class="item-price">490 ₽</span>
+        </div>
+        <div class="item unpaid">
+          <span class="item-name">Цезарь с курицей × 1</span>
+          <span class="item-price">520 ₽</span>
+        </div>
+        <div class="added-label">Добавлено позже</div>
+        <div class="item unpaid">
+          <span class="item-name">Морс клюквенный × 2</span>
+          <span class="item-price">460 ₽</span>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="total-row">
+        <span class="total-label">Итого</span>
+        <span class="total-value">2 060 ₽</span>
+      </div>
+      <div class="payment-info">
+        <span>Оплачено: 590 ₽</span>
+        <span>К оплате: 1 470 ₽</span>
+      </div>
+
+      <button class="btn-primary">Оплатить 1 470 ₽</button>
+    </div>
+  </div>
+
+  <nav class="tab-bar">
+    <a class="tab" href="guest-menu.html"><span class="tab-icon">☰</span>Меню</a>
+    <a class="tab" href="guest-cart.html"><span class="tab-icon">🛒</span>Корзина</a>
+    <a class="tab active" href="#"><span class="tab-icon">📋</span>Заказ</a>
+    <a class="tab" href="guest-call-waiter.html"><span class="tab-icon">🔔</span>Вызов</a>
+  </nav>
+</body>
+</html>
