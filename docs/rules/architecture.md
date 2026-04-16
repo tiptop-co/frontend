@@ -10,29 +10,52 @@ src/
 │   └── providers/          # QueryClientProvider, etc.
 │
 ├── pages/                  # Страницы = маршруты роутера
-│   ├── HomePage.tsx
-│   └── UserPage.tsx
+│   ├── GuestMenuPage.tsx
+│   ├── LoginPage.tsx
+│   ├── WaiterTablesPage.tsx
+│   ├── ManagerMenuPage.tsx
+│   ├── AdminManagersPage.tsx
+│   └── ...
 │
 ├── features/               # Бизнес-фичи (независимые единицы)
-│   └── auth/
-│       ├── ui/             # Компоненты фичи
-│       ├── model/          # Zustand store фичи
-│       └── api/            # TanStack Query хуки фичи
+│   ├── auth/
+│   │   ├── api/            # TanStack Query хуки фичи
+│   │   ├── model/          # Zustand store фичи
+│   │   └── index.ts        # Публичное API фичи
+│   ├── menu/
+│   │   ├── api/
+│   │   ├── ui/             # Компоненты фичи (CategoryFilter, MenuCard)
+│   │   └── index.ts
+│   ├── cart/
+│   ├── order/
+│   ├── payment/
+│   ├── call-waiter/
+│   ├── waiter/
+│   ├── manager/
+│   ├── admin/
+│   └── profile/
 │
 ├── shared/                 # Всё переиспользуемое без бизнес-логики
-│   ├── ui/                 # Button, Input, Modal, Card...
+│   ├── ui/                 # Button, Input, Card, Badge, TabBar, PhoneInput, ConfirmDialog, layouts...
 │   ├── api/                # Базовый fetch-клиент
 │   │   └── client.ts
 │   └── types/              # Общие TypeScript типы
+│       ├── user.ts
+│       ├── dish.ts
+│       ├── order.ts
+│       └── ...
 │
 └── mocks/                  # ВСЕ моки строго здесь
     ├── browser.ts          # MSW worker (для dev)
     ├── handlers/           # Один файл = один ресурс API
-    │   ├── users.ts
-    │   └── orders.ts
+    │   ├── auth.ts
+    │   ├── menu.ts
+    │   ├── orders.ts
+    │   └── ...
     └── fixtures/           # Статичные тестовые данные
         ├── users.ts
-        └── orders.ts
+        ├── dishes.ts
+        └── ...
 ```
 
 ### Правила изоляции
@@ -71,24 +94,19 @@ enableMocking().then(() => {
 ### Структура хендлера
 
 ```typescript
-// src/mocks/handlers/users.ts
+// src/mocks/handlers/menu.ts
 import { http, HttpResponse } from 'msw'
-import { users } from '../fixtures/users'
+import { dishes, categories } from '../fixtures/dishes'
 
-export const userHandlers = [
-  http.get('/api/users', () => {
-    return HttpResponse.json({ data: users })
+export const menuHandlers = [
+  http.get('/api/tables/:tableId/menu', () => {
+    return HttpResponse.json({ dishes, categories })
   }),
 
-  http.get('/api/users/:id', ({ params }) => {
-    const user = users.find(u => u.id === params.id)
-    if (!user) return new HttpResponse(null, { status: 404 })
-    return HttpResponse.json(user)
-  }),
-
-  http.post('/api/users', async ({ request }) => {
-    const body = await request.json()
-    return HttpResponse.json({ id: crypto.randomUUID(), ...body }, { status: 201 })
+  http.get('/api/dishes/:id', ({ params }) => {
+    const dish = dishes.find(d => d.id === params.id)
+    if (!dish) return new HttpResponse(null, { status: 404 })
+    return HttpResponse.json(dish)
   }),
 ]
 ```
@@ -96,13 +114,9 @@ export const userHandlers = [
 ```typescript
 // src/mocks/browser.ts — единая точка сборки всех хендлеров
 import { setupWorker } from 'msw/browser'
-import { userHandlers } from './handlers/users'
-import { orderHandlers } from './handlers/orders'
+import { handlers } from './handlers'
 
-export const worker = setupWorker(
-  ...userHandlers,
-  ...orderHandlers,
-)
+export const worker = setupWorker(...handlers)
 ```
 
 ### Фикстуры
@@ -112,8 +126,7 @@ export const worker = setupWorker(
 import type { User } from '@/shared/types'
 
 export const users: User[] = [
-  { id: '1', name: 'Alice', email: 'alice@example.com', role: 'admin' },
-  { id: '2', name: 'Bob',   email: 'bob@example.com',  role: 'user'  },
+  { id: '1', firstName: 'Анна', lastName: 'Смирнова', phone: '79123456789', role: 'waiter' },
 ]
 ```
 

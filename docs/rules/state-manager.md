@@ -2,25 +2,31 @@
 
 ## Серверный стейт (TanStack Query)
 
-Все обращения к API — через кастомные хуки в `features/*/api/` или `shared/api/`.
+Все обращения к API — через кастомные хуки в `features/*/api/`.
 
 ```typescript
-// src/features/users/api/useUsers.ts
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import type { User, CreateUserDto } from '@/shared/types'
+// src/features/menu/api/useMenu.ts
+import { useQuery } from '@tanstack/react-query'
+import { apiClient } from '@/shared/api/client'
+import type { MenuResponse } from '@/shared/types'
 
-const fetchUsers = (): Promise<User[]> =>
-  fetch('/api/users').then(r => r.json()).then(r => r.data)
+export const useMenu = (tableId: string) =>
+  useQuery({
+    queryKey: ['menu', tableId],
+    queryFn: () => apiClient<MenuResponse>(`/tables/${tableId}/menu`),
+  })
+```
 
-export const useUsers = () =>
-  useQuery({ queryKey: ['users'], queryFn: fetchUsers })
+```typescript
+// src/features/order/api/useOrder.ts
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-export const useCreateUser = () => {
+export const useCreateOrder = () => {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (dto: CreateUserDto) =>
-      fetch('/api/users', { method: 'POST', body: JSON.stringify(dto) }).then(r => r.json()),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['users'] }),
+    mutationFn: (dto: CreateOrderDto) =>
+      apiClient<Order>('/orders', { method: 'POST', body: JSON.stringify(dto) }),
+    onSuccess: (order) => qc.invalidateQueries({ queryKey: ['order', order.tableId] }),
   })
 }
 ```
@@ -31,7 +37,7 @@ export const useCreateUser = () => {
 
 ## Клиентский стейт (Zustand)
 
-Используй **только для UI-стейта**, не имеющего отношения к серверу: открыт ли sidebar, выбранные фильтры, тема, текущий пользователь после логина.
+Используй **только для UI-стейта**, не имеющего отношения к серверу: корзина, текущий пользователь после логина, состояние диалогов.
 
 ```typescript
 // src/features/auth/model/authStore.ts
@@ -40,15 +46,20 @@ import type { User } from '@/shared/types'
 
 interface AuthState {
   user: User | null
-  setUser: (user: User | null) => void
+  token: string | null
+  setAuth: (user: User, token: string) => void
+  logout: () => void
 }
 
 export const useAuthStore = create<AuthState>(set => ({
   user: null,
-  setUser: user => set({ user }),
+  token: null,
+  setAuth: (user, token) => set({ user, token }),
+  logout: () => set({ user: null, token: null }),
 }))
 ```
 
 - Один стор = одна фича или один домен
 - Не храни в Zustand данные, которые уже кэшированы TanStack Query
 - Никаких глобальных сторов-монстров
+- `ConfirmDialog` использует свой Zustand-стор для глобального состояния диалога

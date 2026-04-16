@@ -1,0 +1,52 @@
+import type { User } from '@/shared/types'
+
+export const users: User[] = [
+  {
+    id: 'w1',
+    firstName: 'Анна',
+    lastName: 'Смирнова',
+    phone: '+7 912 345-67-89',
+    role: 'waiter',
+    venueId: 'v1',
+    venueName: 'Гастроном',
+    createdAt: '2026-01-15T10:00:00Z',
+  },
+  {
+    id: 'w2',
+    firstName: 'Пётр',
+    lastName: 'Иванов',
+    phone: '+7 903 111-22-33',
+    role: 'waiter',
+    venueId: 'v1',
+    venueName: 'Гастроном',
+    createdAt: '2026-02-10T10:00:00Z',
+  },
+  {
+    id: 'w3',
+    firstName: 'Мария',
+    lastName: 'Козлова',
+    phone: '+7 905 444-55-66',
+    role: 'waiter',
+    venueId: 'v1',
+    venueName: 'Гастроном',
+    createdAt: '2026-03-01T10:00:00Z',
+  },
+  {
+    id: 'm1',
+    firstName: 'Иван',
+    lastName: 'Петров',
+    phone: '+7 916 777-88-99',
+    role: 'manager',
+    venueId: 'v1',
+    venueName: 'Гастроном',
+    createdAt: '2025-12-01T10:00:00Z',
+  },
+  {
+    id: 'a1',
+    firstName: 'Администратор',
+    lastName: 'TipTop',
+    phone: '+7 900 000-00-00',
+    role: 'admin',
+    createdAt: '2025-01-01T10:00:00Z',
+  },
+]
