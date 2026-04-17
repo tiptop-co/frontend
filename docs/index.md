@@ -14,6 +14,7 @@
 - Ограничения: `rules/restrictions.md`
 - Разделение на компоненты: `rules/components.md`
 - Запуск проекта (команды): `rules/build-and-run.md`
+- Интеграция с бекендом (ручки по страницам): `arch/integration.md`
 
 2. Domain logic
 - Бизнес-логика, сущности: `domain/main.md`
