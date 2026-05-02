@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCartStore } from '@/features/cart'
+import { useCreateOrder } from '@/features/order'
 
 export const GuestCartPage = () => {
   const { tableId } = useParams<{ tableId: string }>()
@@ -9,7 +10,9 @@ export const GuestCartPage = () => {
   const setWishes = useCartStore((s) => s.setWishes)
   const updateQuantity = useCartStore((s) => s.updateQuantity)
   const removeItem = useCartStore((s) => s.removeItem)
+  const clear = useCartStore((s) => s.clear)
   const totalPrice = useCartStore((s) => s.totalPrice())
+  const createOrder = useCreateOrder()
 
   if (items.length === 0) {
     return (
@@ -26,7 +29,23 @@ export const GuestCartPage = () => {
   }
 
   const handleOrder = () => {
-    navigate(`/table/${tableId}/order`)
+    if (!tableId || createOrder.isPending) return
+    createOrder.mutate(
+      {
+        tableId,
+        items: items.map(({ dish, quantity }) => ({
+          dishId: dish.id,
+          quantity,
+        })),
+        wishes: wishes.trim() ? wishes.trim() : undefined,
+      },
+      {
+        onSuccess: () => {
+          clear()
+          navigate(`/table/${tableId}/order`)
+        },
+      },
+    )
   }
 
   return (
@@ -97,11 +116,17 @@ export const GuestCartPage = () => {
         </span>
       </div>
 
+      {createOrder.isError && (
+        <p className="px-4 mt-3 text-sm text-danger text-center">
+          Не удалось оформить заказ. Попробуйте ещё раз.
+        </p>
+      )}
       <button
         onClick={handleOrder}
-        className="fixed bottom-[72px] left-1/2 -translate-x-1/2 max-w-[398px] w-[calc(100%-32px)] bg-terra text-white border-none rounded-[14px] py-4 text-base font-semibold cursor-pointer text-center shadow-[0_4px_16px_rgba(194,112,62,0.35)] z-20"
+        disabled={createOrder.isPending}
+        className="fixed bottom-[72px] left-1/2 -translate-x-1/2 max-w-[398px] w-[calc(100%-32px)] bg-terra text-white border-none rounded-[14px] py-4 text-base font-semibold cursor-pointer text-center shadow-[0_4px_16px_rgba(194,112,62,0.35)] z-20 disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        Заказать
+        {createOrder.isPending ? 'Отправляем…' : 'Заказать'}
       </button>
     </>
   )

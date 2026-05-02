@@ -13,7 +13,7 @@ export const ManagerTablesPage = () => {
       </div>
 
       <button
-        onClick={() => createTable()}
+        onClick={() => createTable((tables?.reduce((m, t) => Math.max(m, t.number), 0) ?? 0) + 1)}
         className="flex items-center justify-center gap-1.5 mx-4 mt-4 py-2.5 px-4 border-[1.5px] border-terra rounded-[10px] bg-transparent text-terra text-[15px] font-semibold cursor-pointer w-[calc(100%-32px)]"
       >
         + Добавить стол

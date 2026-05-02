@@ -2,13 +2,13 @@ import { http, HttpResponse } from 'msw'
 import { orders } from '../fixtures/orders'
 
 export const orderHandlers = [
-  http.get('/api/tables/:tableId/order', ({ params }) => {
+  http.get('/api/v1/tables/:tableId/order', ({ params }) => {
     const order = orders.find((o) => o.tableId === params.tableId)
     if (!order) return new HttpResponse(null, { status: 404 })
     return HttpResponse.json(order)
   }),
 
-  http.post('/api/orders', async ({ request }) => {
+  http.post('/api/v1/orders', async ({ request }) => {
     const body = (await request.json()) as {
       tableId: string
       items: { dishId: string; quantity: number }[]

@@ -7,7 +7,9 @@ export const ManagerStatsPage = () => {
     return <p className="text-muted text-center py-20">Загрузка...</p>
   }
 
-  const maxDaily = Math.max(...stats.dailyRevenue.map((d) => d.amount))
+  const dailyRevenue = stats.dailyRevenue ?? []
+  const topDishes = stats.topDishes ?? []
+  const maxDaily = dailyRevenue.length ? Math.max(...dailyRevenue.map((d) => d.amount)) : 0
 
   return (
     <>
@@ -26,7 +28,7 @@ export const ManagerStatsPage = () => {
       <div className="px-4 pb-5">
         <div className="text-base font-bold mb-3">По дням</div>
         <div className="flex items-end gap-2 h-[120px] px-1">
-          {stats.dailyRevenue.map((d) => {
+          {dailyRevenue.map((d) => {
             const pct = maxDaily > 0 ? (d.amount / maxDaily) * 100 : 0
             return (
               <div key={d.day} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
@@ -47,7 +49,7 @@ export const ManagerStatsPage = () => {
       <div className="px-4 pb-5">
         <div className="text-base font-bold mb-3">Популярные блюда</div>
         <div className="flex flex-col gap-2.5">
-          {stats.topDishes.map((dish, i) => (
+          {topDishes.map((dish, i) => (
             <div key={dish.name} className="bg-white rounded-[10px] p-3 px-3.5 shadow-card flex justify-between items-center">
               <div className="flex items-center gap-2.5">
                 <span className="text-sm font-bold text-terra min-w-[20px]">{i + 1}</span>

@@ -1,11 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { apiClient } from '@/shared/api/client'
+import { apiClient, ApiError } from '@/shared/api/client'
 import type { Order, CreateOrderDto } from '@/shared/types'
 
 export const useOrder = (tableId: string) =>
   useQuery({
     queryKey: ['order', tableId],
-    queryFn: () => apiClient<Order>(`/tables/${tableId}/order`),
+    queryFn: async (): Promise<Order | null> => {
+      try {
+        return await apiClient<Order>(`/tables/${tableId}/order`)
+      } catch (e) {
+        if (e instanceof ApiError && e.status === 404) return null
+        throw e
+      }
+    },
     retry: false,
   })
 

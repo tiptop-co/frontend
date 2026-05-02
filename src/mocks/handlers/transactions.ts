@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw'
 
 export const transactionHandlers = [
-  http.post('/api/transactions', async ({ request }) => {
+  http.post('/api/v1/transactions', async ({ request }) => {
     const body = (await request.json()) as {
       orderId: string
       itemIds: string[]

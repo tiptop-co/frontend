@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { apiClient } from '@/shared/api/client'
-import type { Dish, MenuCategory, MenuResponse, CreateDishDto, Venue, UpdateVenueDto, User, CreateUserDto, Table } from '@/shared/types'
+import { normalizeUser, type ApiUser } from '@/shared/api/user'
+import type { Dish, MenuResponse, CreateDishDto, Venue, UpdateVenueDto, User, CreateUserDto, Table } from '@/shared/types'
 
 export const useManagerMenu = () =>
   useQuery({
@@ -41,17 +42,42 @@ export const useUpdateVenue = () => {
   })
 }
 
+interface RawWaiterStats {
+  user: ApiUser
+  tablesServedToday: number
+  tipsToday: number
+}
+
+export interface WaiterWithStats extends User {
+  tablesServedToday: number
+  tipsToday: number
+}
+
 export const useManagerWaiters = () =>
   useQuery({
     queryKey: ['manager', 'waiters'],
-    queryFn: () => apiClient<{ data: User[] }>('/manager/waiters').then((r) => r.data),
+    queryFn: () =>
+      apiClient<{ data: RawWaiterStats[] }>('/manager/waiters').then((r) =>
+        (r.data ?? []).map(
+          (w): WaiterWithStats => ({
+            ...normalizeUser(w.user),
+            tablesServedToday: w.tablesServedToday ?? 0,
+            tipsToday: w.tipsToday ?? 0,
+          }),
+        ),
+      ),
   })
 
 export const useCreateWaiter = () => {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (dto: CreateUserDto) =>
-      apiClient<User>('/manager/waiters', { method: 'POST', body: JSON.stringify(dto) }),
+    mutationFn: async (dto: CreateUserDto): Promise<User> => {
+      const raw = await apiClient<ApiUser>('/manager/waiters', {
+        method: 'POST',
+        body: JSON.stringify(dto),
+      })
+      return normalizeUser(raw)
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['manager', 'waiters'] }),
   })
 }
@@ -68,14 +94,17 @@ export const useDeleteWaiter = () => {
 export const useManagerTables = () =>
   useQuery({
     queryKey: ['manager', 'tables'],
-    queryFn: () => apiClient<{ data: Table[] }>('/manager/tables').then((r) => r.data),
+    queryFn: () => apiClient<{ tables: Table[] }>('/manager/tables').then((r) => r.tables ?? []),
   })
 
 export const useCreateTable = () => {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: () =>
-      apiClient<Table>('/manager/tables', { method: 'POST' }),
+    mutationFn: (number: number) =>
+      apiClient<Table>('/manager/tables', {
+        method: 'POST',
+        body: JSON.stringify({ number }),
+      }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['manager', 'tables'] }),
   })
 }

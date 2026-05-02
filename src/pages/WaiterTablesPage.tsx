@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useWaiterTables } from '@/features/waiter'
+import { useWaiterTables, useWaiterCompletedOrders } from '@/features/waiter'
 import { useAuthStore } from '@/features/auth'
 import { Badge } from '@/shared/ui'
 import type { Table } from '@/shared/types'
@@ -14,6 +14,7 @@ export const WaiterTablesPage = () => {
   const navigate = useNavigate()
   const user = useAuthStore((s) => s.user)
   const { data, isLoading } = useWaiterTables()
+  const { data: completed } = useWaiterCompletedOrders()
 
   if (isLoading) {
     return <p className="text-muted text-center py-20">Загрузка...</p>
@@ -36,7 +37,7 @@ export const WaiterTablesPage = () => {
         Активные
       </div>
       <div className="px-5 flex flex-col gap-2.5">
-        {data?.active.map((table) => {
+        {data?.tables.map((table) => {
           const badge = STATUS_BADGE[table.status]
           return (
             <div
@@ -60,7 +61,7 @@ export const WaiterTablesPage = () => {
                 <div className="text-[13px] text-muted">
                   {table.status === 'free'
                     ? 'Нет заказа'
-                    : `${table.itemCount} позиций · ${table.totalAmount.toLocaleString('ru-RU')} ₽`}
+                    : `${table.itemCount ?? 0} позиций · ${(table.totalAmount ?? 0).toLocaleString('ru-RU')} ₽`}
                 </div>
               </div>
               <span className="text-[#C4BFB7] text-xl flex-shrink-0">›</span>
@@ -69,34 +70,37 @@ export const WaiterTablesPage = () => {
         })}
       </div>
 
-      {data?.history && data.history.length > 0 && (
+      {completed && completed.length > 0 && (
         <>
           <div className="text-[13px] font-semibold text-muted uppercase tracking-wide px-5 pt-6 pb-2">
-            История за сегодня
+            Завершённые
           </div>
-          <div className="px-5 flex flex-col gap-2.5">
-            {data.history.map((session) => (
+          <div className="px-5 flex flex-col gap-2.5 pb-6">
+            {completed.map((o) => (
               <div
-                key={session.id}
-                className="bg-white rounded-[14px] p-4 px-[18px] shadow-card flex items-center gap-3.5 opacity-60"
+                key={o.orderId}
+                className="bg-white rounded-[14px] p-3.5 px-[18px] shadow-card flex items-center gap-3.5"
               >
-                <div className="w-[52px] h-[52px] rounded-xl bg-muted-bg flex items-center justify-center text-[22px] font-bold flex-shrink-0">
-                  {session.tableNumber}
+                <div className="w-[44px] h-[44px] rounded-xl bg-cream flex items-center justify-center text-[16px] font-bold text-muted flex-shrink-0">
+                  {o.tableNumber}
                 </div>
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-base font-semibold">
-                      Стол {session.tableNumber}
-                    </span>
-                    <Badge label="Закрыт" variant="closed" />
+                  <div className="text-[14px] font-semibold">
+                    Стол {o.tableNumber}
                   </div>
-                  <div className="text-[13px] text-muted">
-                    {session.itemCount} позиций ·{' '}
-                    {session.totalAmount.toLocaleString('ru-RU')} ₽ ·{' '}
-                    {session.startTime}–{session.endTime}
+                  <div className="text-[12px] text-muted">
+                    {new Date(o.completedAt).toLocaleString('ru-RU', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}{' '}
+                    · {o.itemsCount} поз.
                   </div>
                 </div>
-                <span className="text-[#C4BFB7] text-xl flex-shrink-0">›</span>
+                <div className="text-[14px] font-bold text-forest">
+                  {o.totalAmount.toLocaleString('ru-RU')} ₽
+                </div>
               </div>
             ))}
           </div>

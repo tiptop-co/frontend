@@ -14,7 +14,7 @@ export const useTableRequests = (tableId: string) =>
     queryKey: ['requests', tableId],
     queryFn: () =>
       apiClient<{ data: WaiterRequest[] }>(`/tables/${tableId}/requests`).then(
-        (r) => r.data,
+        (r) => r.data ?? [],
       ),
   })
 
@@ -28,6 +28,7 @@ export const useCallWaiter = (tableId: string) => {
       }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['requests', tableId] })
+      qc.invalidateQueries({ queryKey: ['call-status', tableId] })
     },
   })
 }

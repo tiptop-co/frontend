@@ -1,5 +1,6 @@
 export {
   useAdminManagers,
+  useAdminVenues,
   useCreateManager,
   useDeleteManager,
   useAdminStats,
