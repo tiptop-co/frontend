@@ -9,4 +9,14 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: process.env.VITE_BACKEND_ORIGIN ?? 'http://localhost:8080',
+        changeOrigin: true,
+        cookieDomainRewrite: 'localhost',
+        cookiePathRewrite: '/',
+      },
+    },
+  },
 })

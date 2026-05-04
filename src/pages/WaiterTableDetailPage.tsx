@@ -7,7 +7,7 @@ export const WaiterTableDetailPage = () => {
   const { tableId } = useParams<{ tableId: string }>()
   const navigate = useNavigate()
   const { data, isLoading } = useWaiterTableDetail(tableId!)
-  const { mutate: closeTable } = useCloseTable()
+  const { mutate: closeTable, isPending: isClosing } = useCloseTable()
 
   if (isLoading || !data) {
     return <p className="text-muted text-center py-20">Загрузка...</p>
@@ -121,11 +121,15 @@ export const WaiterTableDetailPage = () => {
 
       <div className="px-5 mb-6">
         <button
-          onClick={() => closeTable(tableId!)}
-          disabled={!allPaid}
+          onClick={() =>
+            closeTable(tableId!, {
+              onSuccess: () => navigate('/waiter'),
+            })
+          }
+          disabled={!allPaid || isClosing}
           className="w-full py-3.5 border-2 border-danger rounded-xl bg-transparent text-danger text-base font-semibold cursor-pointer active:bg-danger active:text-white disabled:border-[#D5D0C8] disabled:text-[#D5D0C8] disabled:cursor-not-allowed"
         >
-          Закрыть стол
+          {isClosing ? 'Закрываем…' : 'Закрыть стол'}
         </button>
         {!allPaid && (
           <p className="text-xs text-muted text-center mt-2">

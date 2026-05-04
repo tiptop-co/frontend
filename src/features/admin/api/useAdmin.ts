@@ -1,18 +1,34 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { apiClient } from '@/shared/api/client'
-import type { User, CreateUserDto } from '@/shared/types'
+import { normalizeUser, type ApiUser } from '@/shared/api/user'
+import type { User, CreateUserDto, Venue } from '@/shared/types'
+
+export const useAdminVenues = () =>
+  useQuery({
+    queryKey: ['admin', 'venues'],
+    queryFn: () =>
+      apiClient<{ data: Venue[] }>('/admin/venues').then((r) => r.data ?? []),
+  })
 
 export const useAdminManagers = () =>
   useQuery({
     queryKey: ['admin', 'managers'],
-    queryFn: () => apiClient<{ data: User[] }>('/admin/managers').then((r) => r.data),
+    queryFn: () =>
+      apiClient<{ data: ApiUser[] }>('/admin/managers').then((r) =>
+        (r.data ?? []).map(normalizeUser),
+      ),
   })
 
 export const useCreateManager = () => {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (dto: CreateUserDto) =>
-      apiClient<User>('/admin/managers', { method: 'POST', body: JSON.stringify(dto) }),
+    mutationFn: async (dto: CreateUserDto): Promise<User> => {
+      const raw = await apiClient<ApiUser>('/admin/managers', {
+        method: 'POST',
+        body: JSON.stringify(dto),
+      })
+      return normalizeUser(raw)
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'managers'] }),
   })
 }

@@ -4,7 +4,7 @@ export interface Venue {
   address: string
   description?: string
   bankAccount?: string
-  managerId: string
+  managerId?: string
 }
 
 export interface UpdateVenueDto {

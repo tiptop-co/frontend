@@ -7,9 +7,9 @@ export interface Table {
   status: TableStatus
   waiterId?: string
   orderId?: string
-  itemCount: number
-  totalAmount: number
-  hasActiveRequest: boolean
+  itemCount?: number
+  totalAmount?: number
+  hasActiveRequest?: boolean
 }
 
 export interface ClosedTableSession {
